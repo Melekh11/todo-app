@@ -20,7 +20,7 @@ class Todo(Base):
   id = Column(Integer, primary_key=True)
   title = Column(String)
   description = Column(String)
-  date_created = Column(Date, default=datetime.date)
+  date_created = Column(Date, default=datetime.date.today)
   sharable = Column(Boolean)
 
   tag_id = Column(Integer, ForeignKey("tags.id"))

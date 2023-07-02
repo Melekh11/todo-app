@@ -3,52 +3,47 @@ from datetime import date
 
 
 class TagBase(BaseModel):
-  value: str
-
+    value: str
 
 class TagCreate(TagBase):
-  pass
-
+    pass
 
 class Tag(TagBase):
-  id: int
+    id: int
 
-  class Config:
-      orm_mode = True
-
-
-class TodoBase(BaseModel):
-  title: str
-  description: str
-  date_created: date
-  sharable: bool
-  tag_id: int
-  
-
-class TodoCreate(TodoBase):
-  pass
-
-
-class Todo(TodoBase):
-  id: int
-  tag: Tag
-
-  class Config:
+    class Config:
         orm_mode = True
 
+class TodoBase(BaseModel):
+    title: str
+    description: str
+    sharable: bool
+    tag_id: int
+    owner_id: int
+  
+class TodoCreate(TodoBase):
+    pass
+
+class Todo(TodoBase):
+    id: int
+    date_created: date
+    tag: Tag
+
+    class Config:
+        orm_mode = True
 
 class UserBase(BaseModel):
-  login: str
+    login: str
 
 class UserCreate(UserBase):
-  password: str
+    password: str
 
 class UserLogin(UserCreate):
-  pass
+    pass
 
 class UserChange(UserCreate):
-  id: int
+    id: int
 
 class User(UserBase):
-  id: int
-  todos: list[Todo] = []
+    id: int
+    todos: list[Todo] = []

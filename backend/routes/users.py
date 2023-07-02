@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, Body, HTTPException
 from utils.dependencies import get_db
 from utils.crud_helpers import create_user, get_user_by_login, create_hash, update_user_data, get_user_by_id, delete_user
 from database import SessionLocal
-from tags import Tags
+from routes_tags import Tags
 from schemas import User as UserSchema, UserLogin, UserCreate, UserChange
 from typing import Annotated
 
