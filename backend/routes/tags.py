@@ -21,8 +21,8 @@ async def create(tag_data: Annotated[TagCreate, Body()], db: SessionLocal = Depe
     new_tag = create_tag(db, tag_data)
     return new_tag
 
+
 @tag_router.get("/all", response_model=list[Tag])
 async def get_all(l: int | None = None, db: SessionLocal = Depends(get_db)):
     tags = get_tags(db, l)
     return tags
-
