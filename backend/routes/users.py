@@ -1,12 +1,15 @@
 # TODO: collecting cookie as user data
 
+from utils.helpers import encode_token, decode_token
 from fastapi import APIRouter, Depends, Body, HTTPException
-from utils.dependencies import get_db
+from utils.dependencies import get_db, get_user, ProxyUser
 from utils.crud_helpers import create_user, get_user_by_login, create_hash, update_user_data, get_user_by_id, delete_user
 from database import SessionLocal
 from routes_tags import Tags
-from schemas import User as UserSchema, UserLogin, UserCreate, UserChange
+from schemas import User as UserSchema, UserLogin, UserCreate, UserChange, TokenResponse
 from typing import Annotated
+from models import User
+import os
 
 user_router = APIRouter(
     prefix="/users",
@@ -14,40 +17,60 @@ user_router = APIRouter(
 )
 
 
-@user_router.post("/auth", response_model=UserSchema)
-async def auth(user_data: Annotated[UserCreate, Body()], db: SessionLocal = Depends(get_db)):
+@user_router.post("/auth", response_model=TokenResponse)
+async def auth(
+    user_data: Annotated[UserCreate, Body()],
+    db: SessionLocal = Depends(get_db)
+):
     user = get_user_by_login(db, user_data.login)
     if user:
         raise HTTPException(status_code=400, detail="Login already registered")
     new_db_user = create_user(db, user_data)
-    new_user = {"id": new_db_user.id, "login": new_db_user.login, "todos": new_db_user.todos}
-    return new_user
+    token = encode_token(new_db_user)
+    token = {"access_token": token, "token_type": "bearer"}
+    return token
 
 
-@user_router.post("/login", response_model=UserSchema)
-async def login(user_data: Annotated[UserLogin, Body()], db: SessionLocal = Depends(get_db)):
+@user_router.post("/login", response_model=TokenResponse)
+async def login(
+    user_data: Annotated[UserLogin, Body()],
+    db: SessionLocal = Depends(get_db)
+):
     user = get_user_by_login(db, user_data.login)
     if user:
         if create_hash(user_data.password) == user.hashed_password:
-            return {"id": user.id, "login": user.login, "todos": user.todos}
+            token = encode_token(user)
+            return {"access_token": token, "token_type": "bearer"}
         raise HTTPException(status_code=400, detail="Wrong password")
     raise HTTPException(status_code=400, detail="No user with that login")
 
 
-@user_router.put("/change", response_model=UserSchema)
-async def change_data(user_data: Annotated[UserChange, Body()], db: SessionLocal = Depends(get_db)):
-    user = get_user_by_id(db, user_data.id)
-    if not user:
-        raise HTTPException(status_code=400, detail="No user with that login")
-    new_db_user = update_user_data(db, user, user_data)
-    new_user = {"id": new_db_user.id, "login": new_db_user.login, "todos": new_db_user.todos}
-    return new_user
+@user_router.put("/change", response_model=TokenResponse)
+async def change_data(
+    user_data: Annotated[UserChange, Body()],
+    db: SessionLocal = Depends(get_db),
+    current_user: User = Depends(get_user)
+):
+    print("1")
+    new_db_user = update_user_data(db, current_user, user_data)
+    token = encode_token(new_db_user)
+    return {"access_token": token, "token_type": "bearer"}
 
 
-@user_router.delete("/delete/{user_id}")
-async def delete(user_id: int, db: SessionLocal = Depends(get_db)) -> str:
-    user = get_user_by_id(db, user_id)
-    if not user:
-        raise HTTPException(status_code=400, detail="No such user")
-    delete_user(db, user_id)
+@user_router.delete("/delete")
+async def delete(
+    db: SessionLocal = Depends(get_db),
+    current_user: User = Depends(get_user)
+) -> str:
+    delete_user(db, current_user.id)
     return "OK"
+
+@user_router.get("/me")
+async def me(
+    current_user: User = Depends(get_user)
+) -> UserSchema:
+    return {
+        "id": current_user.id,
+        "login": current_user.login,
+        "todos": current_user.todos
+    }

@@ -2,6 +2,10 @@ from pydantic import BaseModel
 from datetime import date
 
 
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str
+
 class TagBase(BaseModel):
     value: str
 
