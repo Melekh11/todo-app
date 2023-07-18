@@ -33,7 +33,7 @@ def delete_user(db: Session, user_id: int) -> None:
     db.commit()
 
 def create_todo(db: Session, todo_data: TodoCreate) -> TodoModel:
-    db_todo = TodoModel(**todo_data.dict())
+    db_todo = TodoModel(**todo_data)
     db.add(db_todo)
     db.commit()
     db.refresh(db_todo)

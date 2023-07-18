@@ -1,6 +1,6 @@
-from utils.helpers import encode_token, decode_token
+from utils.helpers import encode_token
 from fastapi import APIRouter, Depends, Body, HTTPException
-from utils.dependencies import get_db, get_user, ProxyUser
+from utils.dependencies import get_db, get_user
 from utils.crud_helpers import create_user, get_user_by_login, create_hash, update_user_data, delete_user
 from database import SessionLocal
 from routes_tags import Tags
@@ -60,6 +60,8 @@ async def delete(
 ) -> str:
     delete_user(db, current_user.id)
     return "OK"
+
+
 
 @user_router.get("/me", response_model=UserSchema)
 async def me(current_user: User = Depends(get_user)):

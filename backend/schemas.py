@@ -23,13 +23,14 @@ class TodoBase(BaseModel):
     description: str
     sharable: bool
     tag_id: int
-    owner_id: int
+    
   
 class TodoCreate(TodoBase):
     pass
 
 class Todo(TodoBase):
     id: int
+    owner_id: int
     date_created: date
     tag: Tag
 
@@ -46,7 +47,7 @@ class UserLogin(UserCreate):
     pass
 
 class UserChange(UserCreate):
-    id: int
+    pass
 
 class User(UserBase):
     id: int

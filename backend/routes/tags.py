@@ -1,16 +1,15 @@
-# TODO: add, get all
-
 from typing import Annotated
 from fastapi import APIRouter, Body, Depends, HTTPException
 from schemas import TagCreate, Tag
-from utils.dependencies import get_db
+from utils.dependencies import get_db, get_user
 from utils.crud_helpers import create_tag, get_tag_by_value, get_tags
 from database import SessionLocal
 from routes_tags import Tags as RouterTags
 
 tag_router = APIRouter(
     prefix="/tags",
-    tags=[RouterTags.tags]
+    tags=[RouterTags.tags],
+    dependencies=[Depends(get_user)]
 )
 
 @tag_router.post("/create", response_model=Tag)
