@@ -15,13 +15,25 @@ services:
       - postgres:/var/lib/postgresql/data
     networks:
       - awesome
-  
+
   backend:
     build: ./backend
     depends_on:
       - postgres
     ports:
       - "1502:80"
+    tty: true
+    env_file:
+      - .env
+    networks:
+      - awesome
+
+  fronend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
     tty: true
     env_file:
       - .env
