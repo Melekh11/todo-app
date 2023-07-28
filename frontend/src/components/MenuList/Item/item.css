@@ -1,0 +1,26 @@
+.menu-list__item {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: margin-left 0.5s ease;
+  &:hover {
+    margin-left: 20px;
+
+    & .menu-list__item-name {
+      text-shadow: 0.5px 0.5px 1px black;;
+    }
+  }
+}
+
+.menu-list__item-logo {
+  height: 50px;
+  width: 50px;
+  background-size:100% 100%;
+  margin-right: 25px;
+}
+
+.menu-list__item-name {
+  font-family: "JostBold";
+  font-size: 20px;
+}

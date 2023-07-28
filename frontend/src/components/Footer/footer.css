@@ -1,0 +1,15 @@
+.footer {
+
+  position: absolute;
+  bottom: 21px;
+  right: 30px;
+
+  & * {
+    display: block;
+    margin: 0;
+  }
+}
+
+.footer p:nth-child(2) {
+  font-family: "JostBold";
+}

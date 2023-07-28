@@ -1,0 +1,9 @@
+.menu-list {
+  position: absolute;
+  background-color: #EAEAEA;
+  border-radius: 5px;
+  width: 230px;
+  padding: 67px 85px 81px 28px;
+  right: -30px;
+  list-style-type: none;
+}
