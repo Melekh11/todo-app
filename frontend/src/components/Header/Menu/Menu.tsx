@@ -1,8 +1,10 @@
 import "./menu.css";
 import { ChangeEvent } from "react";
 
+type f = (val: boolean) => void;
+
 type MenuProps = {
-  onChange: Function;
+  onChange: f;
   children?: React.ReactNode;
 };
 

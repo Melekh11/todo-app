@@ -63,4 +63,5 @@ button {
   cursor: pointer;
   border: none;
   background-color: white;
+  font-family: "JostBold", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }

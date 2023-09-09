@@ -1,0 +1,18 @@
+.button {
+  border-radius: 20px;
+  margin: 10px;
+  padding: 15px 50px;
+  background-color: #C0C0C0;
+  border: 2px solid #363636;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #A2A2A2;
+    border: 2px solid black;
+  }
+
+  &_submit:hover {
+    background-color: #A2A2A2;
+    border: 2px solid #79a5fe;
+  }
+}

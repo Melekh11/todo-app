@@ -8,13 +8,12 @@ export function Header() {
   const [isMenuActive, setMenuActive] = useState(false);
 
   const handleClickMenu = (val: boolean) => {
-    console.log("change!!");
     setMenuActive(val);
   }
 
   return (
     <header className="header">
-      <img 
+      <img
         className="header__logo"
         src="./src/assets/img/icons8-todo-list-96.png"
       />

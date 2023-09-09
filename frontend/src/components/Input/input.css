@@ -1,0 +1,66 @@
+.input {
+  z-index: 1;
+  outline: 0;
+  border-width: 0 0 3px 0;
+  width: 100%;
+  border-color: black;
+  transition: border-color 0.2s ease;
+
+  &_error {
+    border-color: red;
+  }
+
+  &:focus {
+   border-color: blue;
+  }
+
+  &:focus + .input__placeholder + .input__error-desc {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+.input-container {
+  width: 100%;
+  margin: 50px 10px;
+  position: relative;
+  display: block;
+}
+
+.input__placeholder {
+  opacity: 0.5;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 20px;
+  color: black;
+  transition: all 0.2s ease;
+
+  &_active {
+    opacity: 1;
+    font-size: 15px;
+    bottom: 100%;
+  }
+
+  &_blue {
+    opacity: 1;
+    color: blue;
+  }
+
+  &_red {
+    opacity: 1;
+    color: red;
+  }
+}
+
+.input__error-desc {
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0px;
+  font-size: 15px;
+  color: red;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+

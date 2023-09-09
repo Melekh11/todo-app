@@ -1,0 +1,26 @@
+.register-form {
+  width: 400px;
+  margin: auto;
+
+  @media screen and (max-width: 750px) {
+    width: 70%;
+  }
+}
+
+.register-form__button-keeper {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+
+  @media screen and (max-width: 750px) {
+    flex-direction: column;
+    width: 70%;
+  }
+}
+
+.register-form__error-message {
+  color: red;
+  margin: auto;
+  text-align: center;
+}

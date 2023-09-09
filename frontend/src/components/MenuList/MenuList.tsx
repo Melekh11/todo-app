@@ -9,16 +9,23 @@ type MenuListProps = {
 export const MenuList = ( { display }: MenuListProps ) => {
   if (display) {
     return (
-      <ul className="menu-list">
+      <div className="menu-list">
         <Item
-          itemUrl={"./src/assets/img/icons8-settings-96.png"}
-          linkText="Настройки"
+          itemUrl={"./src/assets/img/icons8-register-96.png"}
+          linkText="войти"
+          to="login"
         />
         <Item
           itemUrl={"./src/assets/img/icons8-tag-96.png"}
-          linkText="найти по тегу"
+          linkText="поиск по тегам"
+          to="login"
         />
-      </ul>
+        <Item
+          itemUrl={"./src/assets/img/icons8-settings-96.png"}
+          linkText="настройки"
+          to="login"
+        />
+      </div>
     )
   }
   
